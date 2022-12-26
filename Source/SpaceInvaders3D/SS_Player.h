@@ -37,6 +37,65 @@ public:
 
 	UPROPERTY(EditAnywhere)
 		UAudioComponent* DeathExplosionSound;
+	
+	// To limit the player going out of the width of the view
+	UPROPERTY(EditAnywhere)
+		float FieldWidth;
+
+	// To limit the player going out of the height of the view
+	UPROPERTY(EditAnywhere)
+		float FieldHeight;
+
+	UPROPERTY(EditAnywhere)
+		float MaximumVelocity;
+
+	// TODO: Declare Projectile Class
+	//UPROPERTY(EditAnywhere)
+	//	TSubclassOf<AProjectile> WeaponProjectile_BP;
+
+
+	UPROPERTY(BlueprintReadOnly)
+		float MaximumHealth;
+
+	UPROPERTY(BlueprintReadOnly)
+		float CurrentHealth;
+
+	UPROPERTY(BlueprintReadOnly)
+		float MaximumArmour;
+
+	UPROPERTY(BlueprintReadOnly)
+		float CurrentArmour;
+
+	UPROPERTY(BlueprintReadOnly)
+		float PlayerScore;
+	
+	UFUNCTION()
+		void OnBeginOverlap(AActor* PlayerActor, AActor* OtherActor);
+
+
+	bool bIsFiring;
+	bool bHit;
+	bool bDead;
+
+	float WeaponFireRate;
+	float TimeSinceLastShot;
+	float CurrentVelocityX;
+	float CurrentVelocityY;
+
+	FVector CurrentLocation;
+	FVector NewLocation;
+	FRotator CurrentRotation;
+
+	void MoveRight(float AxisValue);
+	void MoveUp(float AxisValue);
+
+	void FireWeapon();
+	void StartFiring();
+	void StopFiring();
+
+	void CollectablePickUp();
+
+
 
 protected:
 	// Called when the game starts or when spawned

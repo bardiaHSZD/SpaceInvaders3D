@@ -25,26 +25,108 @@ ASS_Player::ASS_Player()
 	CollisionComponent->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepRelativeTransform);
 	DeathExplosionSound->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepRelativeTransform);
 
+	MaximumVelocity = 250.0f;
+	CurrentVelocityX = 0.0f;
+	CurrentVelocityY = 0.0f;
+
+	bIsFiring = false;
+	WeaponFireRate = 0.25f;
+	TimeSinceLastShot = 0.0f;
+
+	PlayerScore = 0.0f;
 }
+
 
 // Called when the game starts or when spawned
 void ASS_Player::BeginPlay()
 {
 	Super::BeginPlay();
+
+	CurrentLocation = this->GetActorLocation();
+	CurrentRotation = this->GetActorRotation();
 	
+	bHit = false;
+	bDead = false;
+
+	ExplosionFX->Deactivate();
+	DeathExplosionSound->Deactivate();
+
+	MaximumHealth = 100.0f;
+	CurrentHealth = 100.0f;
+
+	MaximumArmour = 100.0f;
+	CurrentArmour = 100.0f;
+
+	OnActorBeginOverlap.AddDynamic(this, &ASS_Player::OnBeginOverlap);
+
+
 }
 
 // Called every frame
 void ASS_Player::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+	if ((CurrentVelocityX != 0.0f) || (CurrentVelocityY != 0.0f)) {
+		NewLocation = FVector(CurrentLocation.X + (CurrentVelocityX * DeltaTime), 
+			                  CurrentLocation.Y + (CurrentVelocityY * DeltaTime),
+			                  0.0f);
+		this->SetActorLocation(NewLocation);
 
-}
+		CurrentLocation = NewLocation;
+
+
+	}
+
+	if (CurrentVelocityY > 0.1f) {
+		this->SetActorRotation(FRotator(CurrentRotation.Pitch + 45.0f,
+										CurrentRotation.Yaw,
+										CurrentRotation.Roll));
+	}
+	else if (CurrentVelocityY < -0.1f) {
+		this->SetActorRotation(FRotator(CurrentRotation.Pitch - 45.0f,
+			CurrentRotation.Yaw,
+			CurrentRotation.Roll));
+	}
+	else {
+		this->SetActorRotation(FRotator(CurrentRotation));
+
+	}
+
+	if (this->GetActorLocation().X > FieldWidth)
+		CurrentLocation = FVector(FieldWidth - 1.0f, CurrentLocation.Y, CurrentLocation.Z);
+
+	if (this->GetActorLocation().X < -FieldWidth)
+		CurrentLocation = FVector(-FieldWidth + 1.0f, CurrentLocation.Y, CurrentLocation.Z);
+	
+	if (this->GetActorLocation().Y > FieldHeight)
+		CurrentLocation = FVector(CurrentLocation.X, FieldHeight - 1.0f, CurrentLocation.Z);
+
+	if (this->GetActorLocation().Y < -FieldHeight)
+		CurrentLocation = FVector(CurrentLocation.X, -FieldHeight + 1.0f, CurrentLocation.Z);
+}// Tick
 
 // Called to bind functionality to input
 void ASS_Player::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
+	
+	PlayerInputComponent->BindAxis(FName("MoveRight"), this, &ASS_Player::MoveRight);
+	PlayerInputComponent->BindAxis(FName("MoveUp"), this, &ASS_Player::MoveUp);
+
 
 }
 
+// Called based on an event
+void ASS_Player::OnBeginOverlap(AActor* PlayerActor, AActor* OtherActor)
+{
+}
+
+void ASS_Player::MoveRight(float AxisValue)
+{
+	CurrentVelocityX = MaximumVelocity * AxisValue;
+}
+
+void ASS_Player::MoveUp(float AxisValue)
+{
+	CurrentVelocityY = MaximumVelocity * AxisValue;
+}
