@@ -77,17 +77,20 @@ void ASS_Player::Tick(float DeltaTime)
 
 	}
 
+	const float XMargin = 1.0f;
+	const float YMargin = 1.0f;
+
 	if (this->GetActorLocation().X > FieldWidth)
-		CurrentLocation = FVector(FieldWidth - 1.0f, CurrentLocation.Y, CurrentLocation.Z);
+		CurrentLocation = FVector(FieldWidth - XMargin, CurrentLocation.Y, CurrentLocation.Z);
 
 	if (this->GetActorLocation().X < -FieldWidth)
-		CurrentLocation = FVector(-FieldWidth + 1.0f, CurrentLocation.Y, CurrentLocation.Z);
+		CurrentLocation = FVector(-FieldWidth + XMargin, CurrentLocation.Y, CurrentLocation.Z);
 	
 	if (this->GetActorLocation().Y > FieldHeight)
-		CurrentLocation = FVector(CurrentLocation.X, FieldHeight - 1.0f, CurrentLocation.Z);
+		CurrentLocation = FVector(CurrentLocation.X, FieldHeight - YMargin, CurrentLocation.Z);
 
 	if (this->GetActorLocation().Y < -FieldHeight)
-		CurrentLocation = FVector(CurrentLocation.X, -FieldHeight + 1.0f, CurrentLocation.Z);
+		CurrentLocation = FVector(CurrentLocation.X, -FieldHeight + YMargin, CurrentLocation.Z);
 }// Tick
 
 // Called to bind functionality to input
@@ -97,8 +100,6 @@ void ASS_Player::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent
 	
 	PlayerInputComponent->BindAxis(FName("MoveRight"), this, &ASS_Player::MoveRight);
 	PlayerInputComponent->BindAxis(FName("MoveUp"), this, &ASS_Player::MoveUp);
-
-
 }
 
 
