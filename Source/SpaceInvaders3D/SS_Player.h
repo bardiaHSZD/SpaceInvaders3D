@@ -49,36 +49,7 @@ public:
 	UPROPERTY(EditAnywhere)
 		float MaximumVelocity;
 
-	// TODO: Declare Projectile Class
-	//UPROPERTY(EditAnywhere)
-	//	TSubclassOf<AProjectile> WeaponProjectile_BP;
 
-
-	UPROPERTY(BlueprintReadOnly)
-		float MaximumHealth;
-
-	UPROPERTY(BlueprintReadOnly)
-		float CurrentHealth;
-
-	UPROPERTY(BlueprintReadOnly)
-		float MaximumArmour;
-
-	UPROPERTY(BlueprintReadOnly)
-		float CurrentArmour;
-
-	UPROPERTY(BlueprintReadOnly)
-		float PlayerScore;
-	
-	UFUNCTION()
-		void OnBeginOverlap(AActor* PlayerActor, AActor* OtherActor);
-
-
-	bool bIsFiring;
-	bool bHit;
-	bool bDead;
-
-	float WeaponFireRate;
-	float TimeSinceLastShot;
 	float CurrentVelocityX;
 	float CurrentVelocityY;
 
@@ -88,12 +59,6 @@ public:
 
 	void MoveRight(float AxisValue);
 	void MoveUp(float AxisValue);
-
-	void FireWeapon();
-	void StartFiring();
-	void StopFiring();
-
-	void CollectablePickUp();
 
 
 

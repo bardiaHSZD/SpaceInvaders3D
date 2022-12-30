@@ -29,11 +29,6 @@ ASS_Player::ASS_Player()
 	CurrentVelocityX = 0.0f;
 	CurrentVelocityY = 0.0f;
 
-	bIsFiring = false;
-	WeaponFireRate = 0.25f;
-	TimeSinceLastShot = 0.0f;
-
-	PlayerScore = 0.0f;
 }
 
 
@@ -45,19 +40,9 @@ void ASS_Player::BeginPlay()
 	CurrentLocation = this->GetActorLocation();
 	CurrentRotation = this->GetActorRotation();
 	
-	bHit = false;
-	bDead = false;
 
 	ExplosionFX->Deactivate();
 	DeathExplosionSound->Deactivate();
-
-	MaximumHealth = 100.0f;
-	CurrentHealth = 100.0f;
-
-	MaximumArmour = 100.0f;
-	CurrentArmour = 100.0f;
-
-	OnActorBeginOverlap.AddDynamic(this, &ASS_Player::OnBeginOverlap);
 
 
 }
@@ -116,10 +101,7 @@ void ASS_Player::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent
 
 }
 
-// Called based on an event
-void ASS_Player::OnBeginOverlap(AActor* PlayerActor, AActor* OtherActor)
-{
-}
+
 
 void ASS_Player::MoveRight(float AxisValue)
 {
