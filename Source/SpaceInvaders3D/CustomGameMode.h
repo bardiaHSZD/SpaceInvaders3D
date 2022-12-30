@@ -3,6 +3,10 @@
 #pragma once
 
 #include "CoreMinimal.h"
+
+#include "SpaceInvaders3D.h"
+#include "Runtime/JsonUtilities/Public/JsonObjectConverter.h"
+
 #include "GameFramework/GameModeBase.h"
 #include "CustomGameMode.generated.h"
 
@@ -17,6 +21,14 @@ class SPACEINVADERS3D_API ACustomGameMode : public AGameModeBase
 public:
 
 	ACustomGameMode();
+
+
+
+	UPROPERTY(BlueprintReadWrite)
+		int32 FinalScore;
+
+	UPROPERTY(BlueprintReadWrite)
+		int32 MaximumFinalScore;
 
 	/** Return the final score recorded in the current game*/
 	UFUNCTION(BlueprintPure, Category="FinalScore")
@@ -35,10 +47,12 @@ public:
 	// Has exec wire in and out
 	UFUNCTION(BlueprintCallable, Category = "FinalScore")
 		virtual void SetMaximumFinalScore(int32 NewMaximumFinalScore) const;
-	
-	virtual void StartPlay();
 
-	UFUNCTION(BlueprintNativeEvent, Category = "FinalScore", DisplayName="Start Play")
-		void StartPlayEvent();
+	/** Write USTRUTC score to file*/
+	UFUNCTION(BlueprintCallable, Category = "FinalScore")
+		virtual void WriteSerializedScore(FBestPlayer CurrentPlayer) const;
 	
+	/** Read USTRUTC score to file*/
+	UFUNCTION(BlueprintCallable, Category = "FinalScore")
+		virtual FBestPlayer ReadDeSerializedScore();
 };
