@@ -6,6 +6,7 @@
 #include "GameFramework/Actor.h"
 
 #include "Math/Vector.h"
+#include "Math/UnrealMathUtility.h"
 
 #include "DN_Obstacle.generated.h"
 
@@ -26,7 +27,21 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		FVector MovementDirection = FVector(-1.0f, 0.0f, 0.0f);
-		
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		float ScaleMinimum = 0.7f;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		float ScaleMaximum = 1.5f;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		float SpeedMinimum = 200.0f;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		float SpeedMaximum = 500.0f;
+
+	UFUNCTION(BlueprintCallable)
+		void InitializeActorScale();
+
+	UFUNCTION(BlueprintCallable)
+		void InitializeActorSpeed();
 
 protected:
 	// Called when the game starts or when spawned
