@@ -19,3 +19,11 @@ public:
 		int32 BestCurrentScore;
 };
 
+UENUM(BlueprintType)
+enum DifficultyType
+{
+	Easy,
+	Medium,
+	Hard
+};
+

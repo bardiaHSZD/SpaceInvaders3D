@@ -55,4 +55,7 @@ public:
 	/** Read USTRUTC score to file*/
 	UFUNCTION(BlueprintCallable, Category = "FinalScore")
 		virtual FBestPlayer ReadDeSerializedScore();
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		TEnumAsByte<DifficultyType> LevelDifficulty;
 };

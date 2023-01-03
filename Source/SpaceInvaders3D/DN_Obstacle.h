@@ -69,6 +69,7 @@ public:
 	UFUNCTION(BlueprintCallable)
 		void InitializeActorRotationRate();
 
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;

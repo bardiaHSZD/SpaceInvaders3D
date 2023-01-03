@@ -36,15 +36,10 @@ void ACustomGameMode::SetMaximumFinalScore(int32 NewMaximumFinalScore) const
 
 void ACustomGameMode::WriteSerializedScore(FBestPlayer CurrentPlayer) const
 {
-	FString FilePath = "C:\\Users\\bardi\\OneDrive\\Documents\\Github\\Person.json";
-
-
 	FString FileData = "";
 
 	FString JSONPayload;
 	FJsonObjectConverter::UStructToJsonObjectString(CurrentPlayer, JSONPayload, 0, 0);
-
-	// TODO: Write to file here probably using File Helper
 
 	const FString File = *FPaths::Combine(FPaths::GameSourceDir(), FApp::GetProjectName(), TEXT("temp.json"));
 	FFileHelper::SaveStringToFile(
@@ -59,10 +54,7 @@ void ACustomGameMode::WriteSerializedScore(FBestPlayer CurrentPlayer) const
 
 FBestPlayer ACustomGameMode::ReadDeSerializedScore()
 {
-	//FString FilePath = "C:\\Users\\bardi\\OneDrive\\Documents\\Github\\Person.json";
 	const FString FilePath = *FPaths::Combine(FPaths::GameSourceDir(), FApp::GetProjectName(), TEXT("temp.json"));
-
-
 
 	FString FileData = "";
 	if (!FPlatformFileManager::Get().GetPlatformFile().FileExists(*FilePath))
@@ -79,7 +71,6 @@ FBestPlayer ACustomGameMode::ReadDeSerializedScore()
 	{
 		UE_LOG(LogTemp, Warning, TEXT("CONVERTED"));
 	}
-
 
 	return PersonJSON;
 }
