@@ -8,6 +8,10 @@
 #include "Math/Vector.h"
 #include "Math/UnrealMathUtility.h"
 
+#include "Components/SphereComponent.h"
+#include "Components/StaticMeshComponent.h"
+#include "GameFramework/RotatingMovementComponent.h"
+
 #include "DN_Obstacle.generated.h"
 
 UCLASS()
@@ -18,6 +22,19 @@ class SPACEINVADERS3D_API ADN_Obstacle : public AActor
 public:	
 	// Sets default values for this actor's properties
 	ADN_Obstacle();
+
+
+	USceneComponent* DefaultSceneRoot;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		USphereComponent* CollisionSubComponent;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		UStaticMeshComponent* ObstacleStaticMeshSubComponent;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		URotatingMovementComponent* RotatingMovementSubComponent;
+
 
 	UFUNCTION(BlueprintCallable)
 		void MoveAccordingToSpeed(float DeltaSeconds);
@@ -37,11 +54,20 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		float SpeedMaximum = 500.0f;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		float RotationMinimum = 0.0f;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		float RotationMaximum = 360.0f;
+
 	UFUNCTION(BlueprintCallable)
 		void InitializeActorScale();
 
 	UFUNCTION(BlueprintCallable)
 		void InitializeActorSpeed();
+
+	UFUNCTION(BlueprintCallable)
+		void InitializeActorRotationRate();
 
 protected:
 	// Called when the game starts or when spawned

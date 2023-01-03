@@ -9,6 +9,20 @@ ADN_Obstacle::ADN_Obstacle()
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
+
+
+
+	RootComponent = CreateAbstractDefaultSubobject<USceneComponent>(TEXT("RootComponent"));
+	ObstacleStaticMeshSubComponent = CreateAbstractDefaultSubobject<UStaticMeshComponent>(TEXT("ObstacleStaticMeshSubComponent"));
+	CollisionSubComponent = CreateAbstractDefaultSubobject<USphereComponent>(TEXT("CollisionSubComponent"));
+	RotatingMovementSubComponent = CreateAbstractDefaultSubobject<URotatingMovementComponent>(TEXT("RotatingMovementSubComponent"));
+
+	// Attaching all of the components defined above to the root component, i.e. "RootComponent".
+	ObstacleStaticMeshSubComponent->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepRelativeTransform);
+	CollisionSubComponent->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepRelativeTransform);
+
+
+
 }
 
 void ADN_Obstacle::MoveAccordingToSpeed(float DeltaSeconds)
@@ -28,6 +42,15 @@ void ADN_Obstacle::InitializeActorSpeed()
 {
 	float InitialCurrentSpeed = FMath::RandRange(SpeedMinimum, SpeedMaximum);
 	CurrentSpeed = InitialCurrentSpeed;
+}
+
+void ADN_Obstacle::InitializeActorRotationRate()
+{
+	float RollRotationRate = FMath::RandRange(RotationMinimum, RotationMaximum);
+	float PitchRotationRate = FMath::RandRange(RotationMinimum, RotationMaximum);
+	float YawRotationRate = 0.0f;
+	FRotator InitialRotationRate = FRotator(RollRotationRate, PitchRotationRate, YawRotationRate);
+	RootComponent->AddRelativeRotation(InitialRotationRate);
 }
 
 // Called when the game starts or when spawned
