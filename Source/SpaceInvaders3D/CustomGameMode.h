@@ -55,7 +55,16 @@ public:
 	/** Read USTRUTC score to file*/
 	UFUNCTION(BlueprintCallable, Category = "FinalScore")
 		virtual FBestPlayer ReadDeSerializedScore();
-
+	
+	/** Enumeration to Determine Level Difficulty*/
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		TEnumAsByte<DifficultyType> LevelDifficulty;
+
+	/** Write USTRUTC score to file*/
+	UFUNCTION(BlueprintCallable, Category = "FinalScore")
+		virtual void WriteSerializedLevel(FPlayerDifficulty CurrentDifficultyLevel) const;
+
+	/** Read USTRUTC score to file*/
+	UFUNCTION(BlueprintCallable, Category = "FinalScore")
+		virtual FPlayerDifficulty ReadDeSerializedLevel();
 };

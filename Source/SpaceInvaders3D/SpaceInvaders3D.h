@@ -27,3 +27,13 @@ enum DifficultyType
 	Hard
 };
 
+USTRUCT(BlueprintType)
+struct FPlayerDifficulty
+{
+	GENERATED_BODY()
+
+public:
+
+	UPROPERTY(BlueprintReadWrite, Category = "DifficultyLevel")
+		FString CurrentDifficulty;
+};

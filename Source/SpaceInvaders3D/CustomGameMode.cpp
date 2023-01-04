@@ -75,6 +75,45 @@ FBestPlayer ACustomGameMode::ReadDeSerializedScore()
 	return PersonJSON;
 }
 
+void ACustomGameMode::WriteSerializedLevel(FPlayerDifficulty CurrentDifficultyLevel) const
+{
+	FString FileData = "";
+
+	FString JSONPayload;
+	FJsonObjectConverter::UStructToJsonObjectString(CurrentDifficultyLevel, JSONPayload, 0, 0);
+
+	const FString File = *FPaths::Combine(FPaths::GameSourceDir(), FApp::GetProjectName(), TEXT("tempLevel.json"));
+	FFileHelper::SaveStringToFile(
+		JSONPayload,
+		*File,
+		FFileHelper::EEncodingOptions::AutoDetect,
+		&IFileManager::Get()
+	);
+}
+
+FPlayerDifficulty ACustomGameMode::ReadDeSerializedLevel()
+{
+	const FString FilePath = *FPaths::Combine(FPaths::GameSourceDir(), FApp::GetProjectName(), TEXT("tempLevel.json"));
+
+	FString FileData = "";
+	if (!FPlatformFileManager::Get().GetPlatformFile().FileExists(*FilePath))
+	{
+		UE_LOG(LogTemp, Warning, TEXT("DID NOT FIND FILE"));
+	}
+
+	FPlayerDifficulty PersonJSON;
+	FFileHelper::LoadFileToString(FileData, *FilePath);
+
+	UE_LOG(LogTemp, Warning, TEXT("%s"), *FileData);
+
+	if (FJsonObjectConverter::JsonObjectStringToUStruct(FileData, &PersonJSON, 0, 0))
+	{
+		UE_LOG(LogTemp, Warning, TEXT("CONVERTED"));
+	}
+
+	return PersonJSON;
+}
+
 
 
 
