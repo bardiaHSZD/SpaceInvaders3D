@@ -67,4 +67,9 @@ public:
 	/** Read USTRUTC score to file*/
 	UFUNCTION(BlueprintCallable, Category = "FinalScore")
 		virtual FPlayerDifficulty ReadDeSerializedLevel();
+
+	UFUNCTION(BlueprintCallable, Category = "FinalScore")
+		virtual void LoadLevelDifficulty();
+
+
 };

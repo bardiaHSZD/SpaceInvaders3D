@@ -114,6 +114,24 @@ FPlayerDifficulty ACustomGameMode::ReadDeSerializedLevel()
 	return PersonJSON;
 }
 
+void ACustomGameMode::LoadLevelDifficulty()
+{
+	FPlayerDifficulty LoadedLevelDifficulty = ReadDeSerializedLevel();
+
+	if (LoadedLevelDifficulty.CurrentDifficulty == "Easy")
+	{
+		LevelDifficulty = Easy;
+	}
+	else if (LoadedLevelDifficulty.CurrentDifficulty == "Medium")
+	{
+		LevelDifficulty = Medium;
+	}
+	else
+	{
+		LevelDifficulty = Hard;
+	}
+}
+
 
 
 

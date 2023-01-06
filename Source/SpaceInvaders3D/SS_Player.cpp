@@ -2,6 +2,7 @@
 
 
 #include "SS_Player.h"
+#include <Kismet/GameplayStatics.h>
 
 // Sets default values
 ASS_Player::ASS_Player()
@@ -103,6 +104,22 @@ void ASS_Player::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent
 }
 
 
+
+void ASS_Player::UpdateHighScore()
+{
+	//ACustomGameMode* CurrentGameMode = (ACustomGameMode*)GetWorld()->GetAuthGameMode();
+	ACustomGameMode* CurrentGameMode = Cast<ACustomGameMode>(UGameplayStatics::GetGameMode(GetWorld()));
+	if (CurrentGameMode != nullptr)
+	{
+		FBestPlayer CurrentBestPlayer = CurrentGameMode->ReadDeSerializedScore();
+		if (CurrentGameMode->GetFinalScore() < SpaceShipScore)
+		{
+			CurrentGameMode->SetFinalScore(SpaceShipScore);
+		}
+		CurrentBestPlayer.BestCurrentScore = CurrentGameMode->GetFinalScore();
+		CurrentGameMode->WriteSerializedScore(CurrentBestPlayer);
+	}
+}
 
 void ASS_Player::MoveRight(float AxisValue)
 {

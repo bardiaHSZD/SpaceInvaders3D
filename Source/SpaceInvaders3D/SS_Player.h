@@ -9,6 +9,7 @@
 #include "Components/StaticMeshComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "Components/AudioComponent.h"
+#include "CustomGameMode.h"
 
 #include "SS_Player.generated.h"
 
@@ -48,6 +49,12 @@ public:
 
 	UPROPERTY(EditAnywhere)
 		float MaximumVelocity;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		float SpaceShipScore = 0.0f;
+	
+	UFUNCTION(BlueprintCallable, Category = "FinalScore")
+		virtual void UpdateHighScore();
 
 
 	float CurrentVelocityX;
