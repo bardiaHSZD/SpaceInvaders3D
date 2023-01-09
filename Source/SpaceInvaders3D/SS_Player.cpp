@@ -112,12 +112,16 @@ void ASS_Player::UpdateHighScore()
 	if (CurrentGameMode != nullptr)
 	{
 		FBestPlayer CurrentBestPlayer = CurrentGameMode->ReadDeSerializedScore();
-		if (CurrentGameMode->GetFinalScore() < SpaceShipScore)
+		CurrentBestPlayer.CurrentScore = SpaceShipScore;
+
+		if (CurrentBestPlayer.BestCurrentScore < CurrentBestPlayer.CurrentScore)
 		{
 			CurrentGameMode->SetFinalScore(SpaceShipScore);
+			CurrentBestPlayer.BestCurrentScore = CurrentGameMode->GetFinalScore();
+			
 		}
-		CurrentBestPlayer.BestCurrentScore = CurrentGameMode->GetFinalScore();
 		CurrentGameMode->WriteSerializedScore(CurrentBestPlayer);
+		
 	}
 }
 
