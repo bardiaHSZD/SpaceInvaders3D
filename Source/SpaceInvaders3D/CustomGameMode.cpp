@@ -1,5 +1,5 @@
 // Fill out your copyright notice in the Description page of Project Settings.
-// The Game Mode Class for the Project
+// The Game Mode Class for this Project
 
 #include "CustomGameMode.h"
 #include "CustomGameState.h"
